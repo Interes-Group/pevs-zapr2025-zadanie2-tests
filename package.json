@@ -1,0 +1,33 @@
+{
+  "name": "@pevs/zapr-2025-zadanie1-test",
+  "version": "1.0.0",
+  "description": "Tests and test runner for first assignment of ZAPR 2025",
+  "private": "true",
+  "main": "index.js",
+  "type": "module",
+  "author": "tuplle",
+  "license": "Apache-2.0",
+  "keywords": [
+    "test",
+    "pevs",
+    "zapr",
+    "univesity",
+    "course"
+  ],
+  "homepage": "https://zapr.interes.group/assignments/assignment1/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Interes-Group/pevs-zapr2025-zadanie1-test"
+  },
+  "scripts": {
+    "tui:test": "npx @microsoft/tui-test",
+    "dir:test": "node index.js",
+    "project:test": "node src/test-project.js"
+  },
+  "engines": {
+    "node": "<=20.x"
+  },
+  "devDependencies": {
+    "@microsoft/tui-test": "^0.0.1-rc.5"
+  }
+}
