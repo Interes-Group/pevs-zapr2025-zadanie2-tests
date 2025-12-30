@@ -1,14 +1,15 @@
 import {test} from "@microsoft/tui-test";
 import {assertAnyText} from "../src/assertions.js";
+import {getTestName} from "../src/scenario-runner.js";
 import {executeTest, getExecutable, getInitConfig} from "../src/utils.js";
 
 const journal = getExecutable();
 
-test("should print help", async ({terminal}) => {
-	const config = getInitConfig();
-	config.args.help = null;
+const config = getInitConfig();
+config.args.help = null;
+test(getTestName("print help", config), async ({terminal}) => {
 	await executeTest(
-		"print help",
+		"0-0 print help",
 		config,
 		journal,
 		terminal,

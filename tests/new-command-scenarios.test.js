@@ -3,7 +3,7 @@ import {getExecutable} from "../src/utils.js";
 
 const journal = getExecutable()
 
-testScenario(journal, "only-required", {
+testScenario(journal, "1-1 only-required", {
 	cmd: "new",
 	args: {
 		name: "Hobbit",
@@ -14,7 +14,7 @@ testScenario(journal, "only-required", {
 	clear: true
 });
 
-testScenario(journal, "with-score", {
+testScenario(journal, "1-2 with-score", {
 	cmd: "new",
 	args: {
 		name: "Zaklínač",
@@ -26,7 +26,7 @@ testScenario(journal, "with-score", {
 	clear: true
 });
 
-testScenario(journal, "with-end", {
+testScenario(journal, "1-3 with-end", {
 	cmd: "new",
 	args: {
 		name: "The Great Gatsby",
@@ -38,7 +38,7 @@ testScenario(journal, "with-end", {
 	clear: true
 });
 
-testScenario(journal, "with-note", {
+testScenario(journal, "1-4 with-note", {
 	cmd: "new",
 	args: {
 		name: "Moby-Dick",
@@ -50,7 +50,7 @@ testScenario(journal, "with-note", {
 	clear: true
 });
 
-testScenario(journal, "all-optional-args", {
+testScenario(journal, "1-5 all-optional-args", {
 	cmd: "new",
 	args: {
 		name: "1984",
@@ -64,7 +64,7 @@ testScenario(journal, "all-optional-args", {
 	clear: true
 });
 
-testScenario(journal, "end-and-score", {
+testScenario(journal, "1-6 end-and-score", {
 	cmd: "new",
 	args: {
 		name: "Dune",
@@ -77,7 +77,7 @@ testScenario(journal, "end-and-score", {
 	clear: true
 });
 
-testScenario(journal, "end-and-note", {
+testScenario(journal, "1-7 end-and-note", {
 	cmd: "new",
 	args: {
 		name: "Foundation",
@@ -90,7 +90,7 @@ testScenario(journal, "end-and-note", {
 	clear: true
 });
 
-testScenario(journal, "score-and-note", {
+testScenario(journal, "1-8 score-and-note", {
 	cmd: "new",
 	args: {
 		name: "Crime and Punishment",

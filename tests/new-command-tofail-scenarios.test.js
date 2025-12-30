@@ -16,7 +16,7 @@ const withoutNameConfig = {
 };
 test(getTestName("fail-without-name", withoutNameConfig), async ({terminal}) => {
 	await executeTest(
-		"fail-without-name",
+		"2-1 fail-without-name",
 		withoutNameConfig,
 		journal,
 		terminal,
@@ -39,7 +39,7 @@ const withoutAuthorConfig = {
 };
 test(getTestName("fail-without-author", withoutAuthorConfig), async ({terminal}) => {
 	await executeTest(
-		"fail-without-author",
+		"2-2 fail-without-author",
 		withoutAuthorConfig,
 		journal,
 		terminal,
@@ -62,7 +62,7 @@ const withoutGenreConfig = {
 };
 test(getTestName("fail-without-genre", withoutGenreConfig), async ({terminal}) => {
 	await executeTest(
-		"fail-without-genre",
+		"2-3 fail-without-genre",
 		withoutGenreConfig,
 		journal,
 		terminal,
@@ -85,7 +85,7 @@ const withoutStartDateConfig = {
 };
 test(getTestName("fail-without-start", withoutStartDateConfig), async ({terminal}) => {
 	await executeTest(
-		"fail-without-start",
+		"2-4 fail-without-start",
 		withoutStartDateConfig,
 		journal,
 		terminal,

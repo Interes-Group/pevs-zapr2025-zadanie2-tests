@@ -3,7 +3,7 @@ import {getExecutable} from "../src/utils.js";
 
 const journal = getExecutable();
 
-testScenario(journal, "no-args", {
+testScenario(journal, "3-1 no-args", {
 	cmd: "list",
 	args: {},
 	clear: true,
@@ -15,7 +15,7 @@ testScenario(journal, "no-args", {
 	]
 });
 
-testScenario(journal, "filter-by-genre", {
+testScenario(journal, "3-2 filter-by-genre", {
 	cmd: "list",
 	args: {
 		genre: "fantasy"
@@ -30,7 +30,7 @@ testScenario(journal, "filter-by-genre", {
 	]
 });
 
-testScenario(journal, "filter-by-score", {
+testScenario(journal, "3-3 filter-by-score", {
 	cmd: "list",
 	args: {
 		score: "3"
@@ -45,7 +45,7 @@ testScenario(journal, "filter-by-score", {
 	]
 });
 
-testScenario(journal, "filter-only-reading", {
+testScenario(journal, "3-4 filter-only-reading", {
 	cmd: "list",
 	args: {
 		reading: null
@@ -60,7 +60,7 @@ testScenario(journal, "filter-only-reading", {
 	]
 });
 
-testScenario(journal, "filter-only-completed", {
+testScenario(journal, "3-5 filter-only-completed", {
 	cmd: "list",
 	args: {
 		completed: null
@@ -75,7 +75,7 @@ testScenario(journal, "filter-only-completed", {
 	]
 });
 
-testScenario(journal, "empty", {
+testScenario(journal, "3-6 empty", {
 	cmd: "list",
 	args: {},
 	clear: true,
