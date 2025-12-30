@@ -20,7 +20,7 @@ fs.readdirSync(testProjectsFolder).forEach(dir => {
 	if (fs.statSync(projectFolder).isFile()) return;
 	if (!isProjectFolder(projectFolder)) return;
 
-	const projectPrefix = "pevs-zapr2025-zadanie1-"
+	const projectPrefix = "pevs-zapr2025-zadanie2-"
 	const student = projectFolder.substring(projectFolder.indexOf(projectPrefix) + projectPrefix.length);
 	try {
 		console.log("--- PROJECT", projectFolder, "- STUDENT", student, "---");

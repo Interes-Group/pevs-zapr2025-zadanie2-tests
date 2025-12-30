@@ -1,7 +1,7 @@
 {
-  "name": "@pevs/zapr-2025-zadanie1-test",
+  "name": "@pevs/zapr-2025-zadanie2-test",
   "version": "1.0.0",
-  "description": "Tests and test runner for first assignment of ZAPR 2025",
+  "description": "Tests and test runner for second assignment of ZAPR 2025",
   "private": "true",
   "main": "index.js",
   "type": "module",
@@ -14,10 +14,10 @@
     "univesity",
     "course"
   ],
-  "homepage": "https://zapr.interes.group/assignments/assignment1/",
+  "homepage": "https://zapr.interes.group/assignments/assignment2/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Interes-Group/pevs-zapr2025-zadanie1-test"
+    "url": "https://github.com/Interes-Group/pevs-zapr2025-zadanie2-tests"
   },
   "scripts": {
     "tui:test": "npx @microsoft/tui-test",

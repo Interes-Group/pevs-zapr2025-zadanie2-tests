@@ -2,9 +2,10 @@ import * as child_process from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as util from 'node:util';
+import {EXECUTABLE, JOURNAL_FILE} from "./utils.js";
 
 
-const COMPILATION_OUTPUT = process.env.BIN_OUTPUT || path.join(process.cwd(), "bin", "gamestats");
+const COMPILATION_OUTPUT = process.env.BIN_OUTPUT || path.join(process.cwd(), "bin", EXECUTABLE);
 const TEST_PROJECT_SOURCE = process.env.TEST_PROJECT_SOURCE || path.join("src", "main.c");
 const LOG_TO_FILE = process.env.LOG_TO_FILE || false;
 const MAX_POINTS = 15;
@@ -27,6 +28,8 @@ function cleanup() {
 	fs.rmSync(path.join("tests", "__snapshots__"), {recursive: true, force: true});
 	fs.rmSync(path.join("tui-traces"), {recursive: true, force: true});
 	fs.rmSync(COMPILATION_OUTPUT, {force: true});
+	fs.rmSync(JOURNAL_FILE, {force: true});
+	fs.mkdirSync("results", {recursive: true});
 }
 
 function evaluateResults(results) {
@@ -107,6 +110,8 @@ try {
 	log("cleanup");
 	cleanup();
 	log("done");
+
+	process.exit(0);
 
 } catch (e) {
 	log(e);

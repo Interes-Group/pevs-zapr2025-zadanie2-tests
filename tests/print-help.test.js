@@ -1,40 +1,19 @@
-import {expect, Shell, test} from "@microsoft/tui-test";
-import {executeTest, getExecutable} from "../src/utils.js";
+import {test} from "@microsoft/tui-test";
+import {assertAnyText} from "../src/assertions.js";
+import {executeTest, getExecutable, getInitConfig} from "../src/utils.js";
 
-const gamestats = getExecutable();
-
-test.use({shell: Shell.Bash, rows: 25});
+const journal = getExecutable();
 
 test("should print help", async ({terminal}) => {
+	const config = getInitConfig();
+	config.args.help = null;
 	await executeTest(
-		"help",
-		{args: ["--help"]},
-		gamestats,
+		"print help",
+		config,
+		journal,
 		terminal,
 		async (terminal, result) => {
-			await expect(terminal.getByText("Help", {full: true, strict: false})).toBeVisible({timeout: 200});
+			await assertAnyText(terminal, ["help", "Help", "HELP"]);
 			result.asserts.required = true;
 		});
 });
-
-test("should print rankings", async ({terminal}) => {
-	await executeTest(
-		"ranks",
-		{args: ["--ranks"]},
-		gamestats,
-		terminal,
-		async (terminal, result) => {
-			await expect(terminal.getByText("Noob", {full: true, strict: false})).toBeVisible({timeout: 200});
-			await expect(terminal.getByText("Iron", {full: true, strict: false})).toBeVisible({timeout: 200});
-			await expect(terminal.getByText("Bronze", {full: true, strict: false})).toBeVisible({timeout: 200});
-			await expect(terminal.getByText("Silver", {full: true, strict: false})).toBeVisible({timeout: 200});
-			await expect(terminal.getByText("Gold", {full: true, strict: false})).toBeVisible({timeout: 200});
-			await expect(terminal.getByText("Platinum", {full: true, strict: false})).toBeVisible({timeout: 200});
-			await expect(terminal.getByText("Diamond", {full: true, strict: false})).toBeVisible({timeout: 200});
-			await expect(terminal.getByText("Master", {full: true, strict: false})).toBeVisible({timeout: 200});
-			await expect(terminal.getByText("Grandmaster", {full: true, strict: false})).toBeVisible({timeout: 200});
-			await expect(terminal.getByText("Godlike", {full: true, strict: false})).toBeVisible({timeout: 200});
-			result.asserts.required = true;
-		}
-	);
-})
