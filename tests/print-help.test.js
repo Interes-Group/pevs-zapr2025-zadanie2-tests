@@ -7,7 +7,7 @@ const journal = getExecutable();
 
 const config = getInitConfig();
 config.args.help = null;
-test(getTestName("print help", config), async ({terminal}) => {
+test(getTestName("0-0 print help", config), async ({terminal}) => {
 	await executeTest(
 		"0-0 print help",
 		config,

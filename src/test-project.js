@@ -1,3 +1,4 @@
+import JSZip from "jszip";
 import * as child_process from 'node:child_process';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -8,9 +9,12 @@ import {EXECUTABLE, JOURNAL_FILE} from "./utils.js";
 const COMPILATION_OUTPUT = process.env.BIN_OUTPUT || path.join(process.cwd(), "bin", EXECUTABLE);
 const TEST_PROJECT_SOURCE = process.env.TEST_PROJECT_SOURCE || path.join("src", "main.c");
 const LOG_TO_FILE = process.env.LOG_TO_FILE || false;
+const ZIP_RESULTS = process.env.ZIP_RESULTS || false;
 const MAX_POINTS = 15;
 var logFile;
 const logStdout = process.stdout;
+const isoDate = new Date().toISOString().replaceAll(":", "-");
+const CURRENT_DATE = isoDate.substring(0, isoDate.lastIndexOf("."));
 
 if (process.argv.length < 3) {
 	console.log("usage: node test-project.js <test project folder>");
@@ -30,6 +34,35 @@ function cleanup() {
 	fs.rmSync(COMPILATION_OUTPUT, {force: true});
 	fs.rmSync(JOURNAL_FILE, {force: true});
 	fs.mkdirSync("results", {recursive: true});
+}
+
+function addFolderToZip(zip, folderPath) {
+	const entries = fs.readdirSync(folderPath, {withFileTypes: true});
+	for (const entry of entries) {
+		const fullPath = path.join(folderPath, entry.name);
+		if (entry.isDirectory()) {
+			const subZip = zip.folder(entry.name);
+			addFolderToZip(subZip, fullPath);
+		} else {
+			const data = fs.readFileSync(fullPath);
+			zip.file(entry.name, data);
+		}
+	}
+}
+
+async function zipFolder(student, folderPath) {
+	const absFolder = path.resolve(folderPath);
+	const zipPath = path.join(absFolder, `${student}-test-results-${CURRENT_DATE}.zip`);
+
+	const zip = new JSZip();
+	addFolderToZip(zip, absFolder);
+	const buffer = await zip.generateAsync({
+		type: "nodebuffer",
+		compression: "DEFLATE",
+		compressionOptions: {level: 9}
+	});
+	fs.writeFileSync(zipPath, buffer);
+	console.log("ZIP created:", zipPath);
 }
 
 function evaluateResults(results) {
@@ -56,7 +89,7 @@ if (!fs.existsSync(testProjectSource)) {
 	console.error("test project source not found");
 	process.exit(1);
 }
-const testProjectResultsFolder = path.join(testProjectFolder, "test-results", "test-" + (new Date().toISOString().replaceAll(":", "-")));
+const testProjectResultsFolder = path.join(testProjectFolder, "test-results", "test-" + CURRENT_DATE);
 fs.mkdirSync(testProjectResultsFolder, {recursive: true});
 const testLogFile = path.join(testProjectResultsFolder, "tests.log");
 logFile = fs.createWriteStream(testLogFile, {flags: "a"});
@@ -106,14 +139,24 @@ try {
 		fs.copyFileSync(path.join("tests", "__snapshots__", snapshot), path.join(testProjectResultsFolder, "snapshots", snapshot));
 	});
 	log("results copied successfully");
-
-	log("cleanup");
-	cleanup();
-	log("done");
-
-	process.exit(0);
-
+	log("done testing");
 } catch (e) {
 	log(e);
-	process.exit(1);
+} finally {
+	log("cleanup");
+	cleanup();
+
+	if (!ZIP_RESULTS) {
+		process.exit(0);
+	}
+	try {
+		log("archiving results");
+		const projectPrefix = "pevs-zapr2025-zadanie2-"
+		const student = testProjectFolder.substring(testProjectFolder.indexOf(projectPrefix) + projectPrefix.length);
+		await zipFolder(student, testProjectResultsFolder);
+		process.exit(0);
+	} catch (e) {
+		console.error("error while archiving results: ", e);
+		process.exit(1);
+	}
 }

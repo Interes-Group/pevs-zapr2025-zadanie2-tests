@@ -40,11 +40,19 @@ export function getFormattedFileLine(options) {
 }
 
 export function removeFile(filePath) {
-	if (fs.existsSync(filePath)) fs.rmSync(filePath, {force: true});
+	try {
+		if (fs.existsSync(filePath)) fs.rmSync(filePath, {force: true});
+	} catch (e) {
+		console.error("error removing file: ", filePath);
+	}
 }
 
 export function writeToFile(filePath, content) {
-	fs.writeFileSync(filePath, content);
+	try {
+		fs.writeFileSync(filePath, content);
+	} catch (e) {
+		console.error("error writing to file: ", filePath);
+	}
 }
 
 export function getInitConfig() {
@@ -72,7 +80,11 @@ export async function executeTest(scenarioName, scenarioConfig, executable, term
 		terminal.submit(cmd);
 		await testFunction(terminal, result);
 	} finally {
-		await expect(terminal).toMatchSnapshot();
 		writeTestResult(scenarioName, result);
+		try {
+			await expect(terminal).toMatchSnapshot();
+		} catch (e) {
+			console.error("error while snapshotting terminal: ", e);
+		}
 	}
 }

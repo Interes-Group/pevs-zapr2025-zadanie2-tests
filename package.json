@@ -27,7 +27,9 @@
   "engines": {
     "node": "<=20.x"
   },
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
+    "jszip": "^3.10.1",
     "@microsoft/tui-test": "^0.0.1-rc.5"
   }
 }

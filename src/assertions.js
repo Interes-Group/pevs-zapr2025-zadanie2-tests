@@ -30,14 +30,23 @@ export async function assertNameAndValue(terminal, name, values = []) {
 }
 
 export function assertFileExists(filePath) {
-	return fs.existsSync(filePath);
+	try {
+		return fs.existsSync(filePath);
+	} catch (e) {
+		return false;
+	}
 }
 
 export function assertTextInFile(filePath, text) {
-	if (!assertFileExists(filePath)) return false;
-	const fileContent = fs.readFileSync(filePath, {encoding: "utf-8"});
-	console.log("file content: ", fileContent);
-	return fileContent.includes(text);
+	try {
+		if (!assertFileExists(filePath)) return false;
+		const fileContent = fs.readFileSync(filePath, {encoding: "utf-8"});
+		console.log("file content: ", fileContent);
+		return fileContent.includes(text);
+	} catch (e) {
+		console.error("error reading file: ", filePath);
+		return false;
+	}
 }
 
 export function assertFile(filePath) {
@@ -46,6 +55,7 @@ export function assertFile(filePath) {
 		fileContent = fs.readFileSync(filePath, {encoding: "utf-8"});
 		console.log("file content: ", fileContent);
 	} catch (e) {
+		console.error("error reading file: ", filePath);
 		// file does not exist
 	}
 	return {

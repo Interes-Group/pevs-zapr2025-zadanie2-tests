@@ -23,45 +23,52 @@ function prepareJournalFile(content) {
 }
 
 export function newCommandTest(terminal, config, result) {
-	const entry = config.args;
+	try {
+		const entry = config.args;
 
-	result.asserts.fileExists = assertFileExists(JOURNAL_FILE);
-	if (!result.asserts.fileExists) return;
+		result.asserts.fileExists = assertFileExists(JOURNAL_FILE);
+		if (!result.asserts.fileExists) return;
 
-	const assert = assertFile(JOURNAL_FILE);
-	result.asserts.entryName = assert.has(entry.name);
-	result.asserts.entryAuthor = assert.has(entry.author);
-	result.asserts.entryGenre = assert.has(entry.genre);
-	result.asserts.entryStart = assert.has(entry.start);
-	if (entry.end) {
-		result.asserts.entryEnd = assert.has(entry.end);
+		const assert = assertFile(JOURNAL_FILE);
+		result.asserts.entryName = assert.has(entry.name);
+		result.asserts.entryAuthor = assert.has(entry.author);
+		result.asserts.entryGenre = assert.has(entry.genre);
+		result.asserts.entryStart = assert.has(entry.start);
+		if (entry.end) {
+			result.asserts.entryEnd = assert.has(entry.end);
+		}
+		if (entry.score) {
+			result.asserts.entryScore = assert.has(entry.score);
+		}
+		if (entry.note) {
+			result.asserts.entryNote = assert.has(entry.note);
+		}
+		const formattedLineFile = getFormattedFileLine(entry);
+		console.log("formatted line:", formattedLineFile);
+		result.asserts.fileLineFormat = assert.has(formattedLineFile);
+
+		result.asserts.required = result.asserts.entryName &&
+			result.asserts.entryAuthor &&
+			result.asserts.entryGenre &&
+			result.asserts.entryStart;
+	} catch (e) {
+		console.error("error in newCommandTest:", e);
 	}
-	if (entry.score) {
-		result.asserts.entryScore = assert.has(entry.score);
-	}
-	if (entry.note) {
-		result.asserts.entryNote = assert.has(entry.note);
-	}
-	const formattedLineFile = getFormattedFileLine(entry);
-	console.log("formatted line:", formattedLineFile);
-	result.asserts.fileLineFormat = assert.has(formattedLineFile);
-
-	result.asserts.required = result.asserts.entryName &&
-		result.asserts.entryAuthor &&
-		result.asserts.entryGenre &&
-		result.asserts.entryStart;
-
 }
 
 export async function listCommandTest(terminal, config, result) {
-	result.asserts.fileExists = assertFileExists(JOURNAL_FILE);
-	if (!result.asserts.fileExists) return;
+	try {
+		result.asserts.fileExists = assertFileExists(JOURNAL_FILE);
+		if (!result.asserts.fileExists) return;
 
-	result.asserts.required = true;
-	for (const expectedEntry of config.expected) {
-		for (let i = 0; i < expectedEntry.length; i++) {
-			result.asserts[`entry${i + 1}`] = await assertText(terminal, expectedEntry[i]);
+		result.asserts.required = true;
+		for (const expectedEntry of config.expected) {
+			for (let i = 0; i < expectedEntry.length; i++) {
+				result.asserts[`entry${i + 1}`] = await assertText(terminal, expectedEntry[i]);
+			}
 		}
+	} catch (e) {
+		console.error("error in listCommandTest:", e);
 	}
 }
 

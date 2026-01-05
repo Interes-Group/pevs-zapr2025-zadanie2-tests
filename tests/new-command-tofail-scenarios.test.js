@@ -14,7 +14,7 @@ const withoutNameConfig = {
 	},
 	clear: true
 };
-test(getTestName("fail-without-name", withoutNameConfig), async ({terminal}) => {
+test(getTestName("2-1 fail-without-name", withoutNameConfig), async ({terminal}) => {
 	await executeTest(
 		"2-1 fail-without-name",
 		withoutNameConfig,
@@ -37,7 +37,7 @@ const withoutAuthorConfig = {
 	},
 	clear: true
 };
-test(getTestName("fail-without-author", withoutAuthorConfig), async ({terminal}) => {
+test(getTestName("2-2 fail-without-author", withoutAuthorConfig), async ({terminal}) => {
 	await executeTest(
 		"2-2 fail-without-author",
 		withoutAuthorConfig,
@@ -60,7 +60,7 @@ const withoutGenreConfig = {
 	},
 	clear: true
 };
-test(getTestName("fail-without-genre", withoutGenreConfig), async ({terminal}) => {
+test(getTestName("2-3 fail-without-genre", withoutGenreConfig), async ({terminal}) => {
 	await executeTest(
 		"2-3 fail-without-genre",
 		withoutGenreConfig,
@@ -83,7 +83,7 @@ const withoutStartDateConfig = {
 	},
 	clear: true
 };
-test(getTestName("fail-without-start", withoutStartDateConfig), async ({terminal}) => {
+test(getTestName("2-4 fail-without-start", withoutStartDateConfig), async ({terminal}) => {
 	await executeTest(
 		"2-4 fail-without-start",
 		withoutStartDateConfig,
